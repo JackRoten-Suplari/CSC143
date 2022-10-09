@@ -13,8 +13,13 @@ public class Main {
         System.out.println(studentManager.getStudentCount("CSC142c"));
         System.out.println(studentManager.getCourseName(3));
         System.out.println(studentManager.getStudent(3, 2));
-        System.out.println(studentManager.getStudents(3));
-        System.out.println(studentManager.findStudentCourse("163584"));
+//        Student[] students = studentManager.getStudents(3);
+
+//        for (int student = 0; student< students.length; student++){
+//            System.out.println(students[student].toString());
+//        }
+//        System.out.println(studentManager.findStudentCourse("163584"));
+
 
         // All implemented methods are working as expected!!
         // Arrays are created as expected!!

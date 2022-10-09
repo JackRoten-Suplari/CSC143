@@ -55,6 +55,12 @@ public class StudentManager implements StudentManagerInterface{
             });
             courseIndex++;
         }
+//        for (int i = 0; i<this.students.length; i++){
+//            for (int j = 0; j<this.students[i].length; j++){
+//                System.out.println(this.students[i][j]);
+//            }
+//        }
+
     }
     
     public int getCourseCount() {

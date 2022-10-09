@@ -22,6 +22,9 @@ public record Student(String course, String id, String lastName, String firstNam
             throw new IllegalArgumentException("Phone number must not be null");
         }
     }
+    public String toString() {
+        return course + ", " + id + ", " + lastName + ", " + firstName + ", " + email + ", " + phone;
+    }
 }
 
 
