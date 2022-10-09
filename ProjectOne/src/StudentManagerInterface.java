@@ -39,7 +39,7 @@ public interface StudentManagerInterface {
     public String getCourseName(int courseIndex);
 
     /**
-     * Retrieves the student at the specifiec course and student index
+     * Retrieves the student at the specific course and student index
      * @param courseIndex       course index
      * @param studentIndex      student index
      * @return                  student at that array position
