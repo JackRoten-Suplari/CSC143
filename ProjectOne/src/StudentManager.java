@@ -69,26 +69,22 @@ public class StudentManager implements StudentManagerInterface{
 
 
     public int getStudentCount(int courseIndex) {
-        // Count all lines in the array by course index
         return this.students[courseIndex].length;
     }
 
 
     public int getStudentCount() {
-        // Count all lines in array, in total
         return this.studentCount;
     }
 
 
     public int getStudentCount(String courseName) {
-        int courseIndex = 0;
-        while(courseIndex < this.courseCount){
-            if(this.courses[courseIndex].equals(courseName)){
-                break;
+        for (int courseIndex = 0; courseIndex < this.courseCount; courseIndex++) {
+            if (this.courses[courseIndex].equals(courseName)) {
+                return this.students[courseIndex].length;
             }
-            courseIndex++;
         }
-        return this.students[courseIndex].length;
+        return -1;
     }
 
 
@@ -109,28 +105,13 @@ public class StudentManager implements StudentManagerInterface{
 
     public int findStudentCourse(String id) {
         int courseIndex;
-        int studentCourse = -1;
         for (courseIndex = 0; courseIndex < students.length; courseIndex++){
             for (int studentIndex = 0; studentIndex < students[courseIndex].length; studentIndex++){
                 if (id.equals(this.students[courseIndex][studentIndex].id())){
-                    studentCourse = courseIndex;
-                    break;
+                    return courseIndex;
                 }
             }
         }
-        return studentCourse;
+        return -1;
     }
-
-//    /**
-//     *
-//     * @param other
-//     * @return
-//     */
-//    public int compare(Student student1, Student student2){
-//        return student1.lastName().compareTo(student2.lastName());
-//    }
-
-//    public static void main(String[] args) throws FileNotFoundException {
-//        StudentManager studentManager = new.StudentManager();
-//    }
 }

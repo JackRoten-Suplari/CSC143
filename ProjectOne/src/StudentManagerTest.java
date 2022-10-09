@@ -12,15 +12,6 @@ class StudentManagerTest {
         StudentManager studentManager = new StudentManager();
         assertEquals(15, studentManager.getCourseCount());
         assertEquals(403, studentManager.getStudentCount());
-        assertEquals(30, studentManager.getStudentCount(3));
-        assertEquals(30, studentManager.getStudentCount("CSC142c"));
-        assertEquals("CSC110d", studentManager.getCourseName(3));
-        assertEquals(new Student("CSC110d", "211091", "Chenery",
-                "Ashla", "achenery2f@chron.com", "791-478-9345"),
-                studentManager.getStudent(3, 2));
-//        assertEquals(14, studentManager.getStudents(3));
-        assertEquals(14, studentManager.findStudentCourse("163584"));
-
     }
 
 
@@ -30,20 +21,21 @@ class StudentManagerTest {
     }
 
     @Test
-    void getStudentCount() throws FileNotFoundException {
+    void getStudentCountTotal() throws FileNotFoundException {
         assertEquals(403, new StudentManager().getStudentCount());
 
     }
 
     @Test
-    void testGetStudentCount() throws FileNotFoundException {
+    void GetStudentCountByIndex() throws FileNotFoundException {
         assertEquals(30, new StudentManager().getStudentCount(3));
 
     }
 
     @Test
-    void testGetStudentCount1() throws FileNotFoundException {
+    void GetStudentCountByCourse() throws FileNotFoundException {
         assertEquals(30, new StudentManager().getStudentCount("CSC142c"));
+        assertEquals(-1, new StudentManager().getStudentCount("CSC142f"));
 
     }
 
@@ -104,6 +96,6 @@ class StudentManagerTest {
     @Test
     void findStudentCourse() throws FileNotFoundException {
         assertEquals(14, new StudentManager().findStudentCourse("163584"));
-
+        assertEquals(-1, new StudentManager().findStudentCourse("1635845"));
     }
 }
