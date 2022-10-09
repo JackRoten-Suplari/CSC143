@@ -12,17 +12,20 @@ public class StudentManager implements StudentManagerInterface{
 
     private String[] courses;
 
+    private Student[][] students;
+
     StudentManager() throws FileNotFoundException {
 
         Scanner courseFile = new Scanner(new File("/Users/jackroten/src/github.com/CSC143/ProjectOne/Data/Courses.csv"));
         Scanner studentsFile = new Scanner(new File("/Users/jackroten/src/github.com/CSC143/ProjectOne/Data/Students.csv"));
 
         this.courseCount= Integer.parseInt(courseFile.nextLine());
+        this.studentCount = 0;
         String courseHeader = courseFile.nextLine();
         String studentHeader = studentsFile.nextLine();
 
         this.courses = new String[this.courseCount];
-        Student students[][] = new Student[this.courseCount][];
+        this.students = new Student[this.courseCount][];
 
         int courseIndex = 0;
         // parse course file to get row number
@@ -33,29 +36,24 @@ public class StudentManager implements StudentManagerInterface{
             String courseEnrollment = line.split(",")[1];
             int courseCounts= Integer.valueOf(courseEnrollment);
             this.courses[courseIndex] = course;
-            students[courseIndex] = new Student[courseCounts];
+            this.students[courseIndex] = new Student[courseCounts];
             for (int studentIndex = 0; studentIndex<courseCounts; studentIndex++){
                 String studentLine = studentsFile.nextLine();
-                students[courseIndex][studentIndex] = new Student(studentLine.split(",")[0],
+                this.students[courseIndex][studentIndex] = new Student(studentLine.split(",")[0],
                         studentLine.split(",")[1],
                         studentLine.split(",")[2],
                         studentLine.split(",")[3],
                         studentLine.split(",")[4],
                         studentLine.split(",")[5]);
+                this.studentCount++;
             }
-            Arrays.sort(students[courseIndex], new Comparator<Student>() {
+            Arrays.sort(this.students[courseIndex], new Comparator<Student>() {
                 @Override
                 public int compare(Student o1, Student o2) {
                     return o1.lastName().compareTo(o2.lastName());
                 }
             });
             courseIndex++;
-        }
-        // TODO: Remove later
-        for (int i = 0; i < students.length; i++){
-            for(int j = 0; j < students[i].length; j++){
-                System.out.println(students[i][j] + " ");
-            }
         }
     }
     
@@ -66,7 +64,7 @@ public class StudentManager implements StudentManagerInterface{
 
     public int getStudentCount(int courseIndex) {
         // Count all lines in the array by course index
-        return 0;
+        return this.students[courseIndex].length;
     }
 
 
@@ -77,29 +75,44 @@ public class StudentManager implements StudentManagerInterface{
 
 
     public int getStudentCount(String courseName) {
-        // Count all lines in the array by courseName
-        return 0;
+        int courseIndex = 0;
+        while(courseIndex < this.courseCount){
+            if(this.courses[courseIndex].equals(courseName)){
+                break;
+            }
+            courseIndex++;
+        }
+        return this.students[courseIndex].length;
     }
 
 
     public String getCourseName(int courseIndex) {
-        // get course name
-        return null;
+        return this.courses[courseIndex];
     }
 
 
     public Student getStudent(int courseIndex, int studentIndex) {
-        return null;
+        return this.students[courseIndex][studentIndex];
     }
 
 
     public Student[] getStudents(int courseIndex) {
-        return null;
+        return this.students[courseIndex];
     }
 
 
     public int findStudentCourse(String id) {
-        return 0;
+        int courseIndex;
+        int studentCourse = -1;
+        for (courseIndex = 0; courseIndex < students.length; courseIndex++){
+            for (int studentIndex = 0; studentIndex < students[courseIndex].length; studentIndex++){
+                if (id.equals(this.students[courseIndex][studentIndex].id())){
+                    studentCourse = courseIndex;
+                    break;
+                }
+            }
+        }
+        return studentCourse;
     }
 
 //    /**
