@@ -20,7 +20,6 @@ class StudentTest {
                 "Ashla", "", "791-478-9345"));
         assertThrows(IllegalArgumentException.class, () -> new Student("211091", "Chenery",
                 "Ashla", "achenery2f@chron.com", null));
-
     }
 
     @Test
