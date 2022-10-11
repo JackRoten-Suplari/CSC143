@@ -4,42 +4,61 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Scanner;
 
-//
+/**
+ * Manages student and course data
+ * @author      Jack Roten
+ * @version     2022-10-09
+ */
 public class StudentManager implements StudentManagerInterface{
 
+    /**
+     * count of courses
+     */
     private int courseCount;
+    /**
+     * count of students
+     */
     private int studentCount;
-
+    /**
+     * array of course names
+     */
     private String[] courses;
-
+    /**
+     * jagged array of students by course number and Students in each course
+     */
     private Student[][] students;
 
+    /**
+     * Constructor, handles student and course files, formatting data into 2D and 1D arrays respectively
+     * @throws FileNotFoundException if file has error
+     */
     StudentManager() throws FileNotFoundException {
+        // retrieve student and course data
+        Scanner courseFile = new Scanner(new File("Data/Courses.csv").getAbsoluteFile());
+        Scanner studentsFile = new Scanner(new File("Data/Students.csv").getAbsoluteFile());
 
-        Scanner courseFile = new Scanner(new File("/Users/jackroten/src/github.com/CSC143/ProjectOne/Data/Courses.csv"));
-        Scanner studentsFile = new Scanner(new File("/Users/jackroten/src/github.com/CSC143/ProjectOne/Data/Students.csv"));
-
+        // update course and student counts to prepare creating course and student arrays
         this.courseCount= Integer.parseInt(courseFile.nextLine());
         this.studentCount = 0;
-        String courseHeader = courseFile.nextLine();
-        String studentHeader = studentsFile.nextLine();
+        int courseIndex = 0;
+        courseFile.nextLine();
+        studentsFile.nextLine();
 
+        // initialize courses and students arrays
         this.courses = new String[this.courseCount];
         this.students = new Student[this.courseCount][];
 
-        int courseIndex = 0;
-        // parse course file to get row number
-        // parse student file to get student and course
+        // Create jagged array of student data based on course name and sorted by last name
         while (courseFile.hasNextLine()){
             String line = courseFile.nextLine();
             String course = line.split(",")[0];
             String courseEnrollment = line.split(",")[1];
-            int courseCounts= Integer.valueOf(courseEnrollment);
+            int courseCounts = Integer.valueOf(courseEnrollment);
             this.courses[courseIndex] = course;
             this.students[courseIndex] = new Student[courseCounts];
             for (int studentIndex = 0; studentIndex<courseCounts; studentIndex++){
                 String studentLine = studentsFile.nextLine();
-                this.students[courseIndex][studentIndex] = new Student(studentLine.split(",")[0],
+                this.students[courseIndex][studentIndex] = new Student(
                         studentLine.split(",")[1],
                         studentLine.split(",")[2],
                         studentLine.split(",")[3],
@@ -47,20 +66,9 @@ public class StudentManager implements StudentManagerInterface{
                         studentLine.split(",")[5]);
                 this.studentCount++;
             }
-            Arrays.sort(this.students[courseIndex], new Comparator<Student>() {
-                @Override
-                public int compare(Student o1, Student o2) {
-                    return o1.lastName().compareTo(o2.lastName());
-                }
-            });
+            Arrays.sort(this.students[courseIndex], Comparator.comparing(Student::lastName));
             courseIndex++;
         }
-//        for (int i = 0; i<this.students.length; i++){
-//            for (int j = 0; j<this.students[i].length; j++){
-//                System.out.println(this.students[i][j]);
-//            }
-//        }
-
     }
     
     public int getCourseCount() {
@@ -113,5 +121,19 @@ public class StudentManager implements StudentManagerInterface{
             }
         }
         return -1;
+    }
+
+    /**
+     *
+     * @return Total Student Data
+     */
+    public String toString(){
+        String studentsString = "";
+        for (int course = 0; course<this.students.length; course++){
+            for (int student = 0; student<this.students[course].length; student++){
+                studentsString += this.courses[course] + ", " +this.students[course][student].toString() + "\n";
+            }
+        }
+        return studentsString;
     }
 }

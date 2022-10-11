@@ -1,34 +1,35 @@
 import java.io.FileNotFoundException;
 
+/**
+ * Executes StudentManager class and outputs results of interface methods
+ */
 public class Main {
     public static void main(String[] args) throws FileNotFoundException {
 
         // Construct StudentManager:
         StudentManager studentManager = new StudentManager();
 
-        // Initial tests for interface usage:
-        System.out.println("Test Output");
-        System.out.println(studentManager.getStudentCount());
-        System.out.println(studentManager.getStudentCount(3));
-        System.out.println(studentManager.getStudentCount("CSC142c"));
-        System.out.println(studentManager.getCourseName(3));
-        System.out.println(studentManager.getStudent(3, 2));
-//        Student[] students = studentManager.getStudents(3);
+        // Examples of studentManager usage:
+        int[] courseIndices = {2, 3, 14};
+        int[] studentIndices = {5,10,15};
+        String[] courses = {"CSC110c", "CSC110d", "CSC143c"};
 
-//        for (int student = 0; student< students.length; student++){
-//            System.out.println(students[student].toString());
-//        }
-//        System.out.println(studentManager.findStudentCourse("163584"));
+        System.out.println("Basic examples of studentManager methods and usage:");
+        System.out.println("Output of all student data: \n" + studentManager);
+        System.out.println("Total course count: " + studentManager.getCourseCount());
+        System.out.println("Total student count: " + studentManager.getStudentCount() + "\n");
 
+        for (int example = 0; example<courseIndices.length; example++){
+            System.out.println("Total students for course with index " +
+                    courseIndices[example] + ": " + studentManager.getStudentCount(courseIndices[example]));
+            System.out.println("Total students for course " + courses[example] +
+                    ": " + studentManager.getStudentCount(courses[example]));
 
-        // All implemented methods are working as expected!!
-        // Arrays are created as expected!!
-        // Currently all code works as assignment asks, as far as I understand it.
-
-        // TODO: Confirm java doc usage and implement.
-        // TODO: Write tests for each method in StudentManager.
-        // TODO: Use Xlint and review the usage of that in lecture.
-        // TODO: Review instructions and check if anything else needs to be coded
-
+            System.out.println("Course name for course with index " + courseIndices[example] +
+                    ": " + studentManager.getCourseName(courseIndices[example]));
+            System.out.println("Student at course index " + courseIndices[example] +
+                    " and student index " + studentIndices[example] +
+                    ": \n" + studentManager.getStudent(courseIndices[example], studentIndices[example]) + "\n");
+        }
     }
 }
